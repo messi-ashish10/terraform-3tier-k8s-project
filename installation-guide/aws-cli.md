@@ -197,5 +197,3 @@ If yes → everything is working correctly.
 ---
 
 
-This setup follows best practices for DevOps learning.
-
