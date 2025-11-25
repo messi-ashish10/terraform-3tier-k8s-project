@@ -41,6 +41,7 @@ The role assumption was tested using:
 
 ```bash
 aws sts get-caller-identity
+```
 
 ---
 
