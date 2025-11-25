@@ -54,7 +54,8 @@ aws sts get-caller-identity
 ---
 
 
-5. Git & GitHub
+## 5. Git & GitHub
 - Git is installed
 - My project repository is set up on GitHub and connected to my local enivronment
 
+---
