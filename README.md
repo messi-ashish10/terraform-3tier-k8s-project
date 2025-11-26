@@ -6,56 +6,15 @@ A complete 3-tier application deployed using Terraform, Docker, and Kubernetes. 
 Before working on this project, I set up the essential tools and configurations in my local environment.  
 Everything here was installed on **Windows with WSL2 (Ubuntu 22.04)**, but the same tools can be used on Linux or macOS as well.
 
+- **WSL2 (Ubuntu)** set up as the development environment  
+- **Docker**, **Kubectl**, **Minikube**, and **Helm** installed on Ubuntu  
+- **Terraform** installed and authenticated with AWS using `aws configure`  
+- Valid **AWS IAM user or IAM role** with programmatic access  
+- **Git** installed with SSH access configured for GitHub  
+- Project structure already initialized (`app/`, `docker/`, `infra/`, `kubernetes/`, `cicd/`, etc.)
+
+Before continuing, please follow the  
+👉 **[Installation Guide](./docs/installation)**  
+for detailed setup instructions.
 ---
 
-## 1. System Setup
-- Windows 10/11  
-- WSL2 enabled  
-- Ubuntu 22.04 (inside WSL)
-
----
-
-## 2. Tools I Installed
-These tools are required for development and testing.  
-All of them are already installed and working in my setup.
-
-- **Docker** – for building and running containers  
-- **kubectl** – Kubernetes command-line tool  
-- **Minikube** – to run a local Kubernetes cluster  
-- **Helm** – Kubernetes package manager
-
----
-
-## 3. AWS Configuration
-To connect Terraform with AWS, I completed these steps:
-
-- Installed and configured **AWS CLI v2**  
-- Set up an **IAM User** with Access Key and Secret Key  
-- Created a dedicated **IAM Role** for Terraform  
-  - The role includes `sts:AssumeRole`  
-  - The trust policy allows my IAM user to assume it  
-- Added a new AWS CLI profile that assumes this role  
-  (example: `terraform-project-admin`)
-
-The role assumption was tested using:
-
-```bash
-aws sts get-caller-identity
-```
-
----
-
-
-## 4. Terraform
-- Installed Terraform CLI
-- Initialized Terraform inside the infra directory
-- Terraform successfully connects to AWS using the IAM role
-
----
-
-
-## 5. Git & GitHub
-- Git is installed
-- My project repository is set up on GitHub and connected to my local enivronment
-
----
