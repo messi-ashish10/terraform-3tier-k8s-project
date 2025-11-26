@@ -13,8 +13,7 @@ Everything here was installed on **Windows with WSL2 (Ubuntu 22.04)**, but the s
 - **Git** installed with SSH access configured for GitHub  
 - Project structure already initialized (`app/`, `docker/`, `infra/`, `kubernetes/`, `cicd/`, etc.)
 
-Before continuing, please follow the  
-👉 **[Installation Guide](./installation-guide)**  
-for detailed setup instructions.
+Before continuing, please follow the  **[Installation Guide](./installation-guide)**  for detailed setup instructions.
+
 ---
 
