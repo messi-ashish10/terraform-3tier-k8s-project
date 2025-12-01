@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: backend
-          image: backend:latest
+          image: ashishgurau/backend:v4
           ports:
             - containerPort: 5000
           env:
-            - name: mongo # Environment variable for MongoDB connection
+            - name: MONGO_URL # Environment variable for MongoDB connection
               value: "mongodb://mongo-service:27017" # Assuming a service named mongo-service exposes MongoDB

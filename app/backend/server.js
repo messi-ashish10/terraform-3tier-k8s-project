@@ -8,7 +8,7 @@ app.use(cors());
 
 // MongoDB connection
 mongoose
-  .connect("mongodb://mongo:27017/tasksdb")
+  .connect(process.env.MONGO_URL || "mongodb://mongo-service:27017/tasksdb")
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 

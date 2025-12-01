@@ -6,7 +6,7 @@ function App() {
   const [title, setTitle] = useState("");
 
   const fetchTasks = async () => {
-    const res = await axios.get("http://localhost:5000/tasks");
+    const res = await axios.get("http://192.168.49.2:30050/tasks");
     setTasks(res.data);
   };
 
@@ -16,13 +16,13 @@ function App() {
 
   const addTask = async () => {
     if (!title) return;
-    await axios.post("http://localhost:5000/tasks", { title });
+    await axios.post("http://192.168.49.2:30050/tasks", { title });
     setTitle("");
     fetchTasks();
   };
 
   const deleteTask = async (id) => {
-    await axios.delete(`http://localhost:5000/tasks/${id}`);
+    await axios.delete(`http://192.168.49.2:30050/tasks/${id}`);
     fetchTasks();
   };
 
