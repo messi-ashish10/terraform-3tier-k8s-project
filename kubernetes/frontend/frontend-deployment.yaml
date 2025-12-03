@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ashishgurau/frontend:v5
+        image: ashishgurau/frontend:v6
         ports:
         - containerPort: 80
