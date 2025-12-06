@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-deployment
+  labels:
+    app: backend
+    tier: api
+    project: project1
 spec:
   replicas: 1
   selector:
@@ -11,12 +15,41 @@ spec:
     metadata:
       labels:
         app: backend
+        tier: api
+        project: project1
     spec:
       containers:
         - name: backend
-          image: ashishgurau/backend:v4
+          image: ashishgurau/backend:v6
           ports:
             - containerPort: 5000
+
+          # Environment variables
           env:
-            - name: MONGO_URL # Environment variable for MongoDB connection
-              value: "mongodb://mongo-service:27017" # Assuming a service named mongo-service exposes MongoDB
+            - name: MONGO_URL
+              value: "mongodb://mongo-service:27017"
+
+          # Resource requests & limits (best practice)
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+
+          # Liveness probe: checks if app is alive
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          # Readiness probe: checks if app is ready to receive traffic
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
