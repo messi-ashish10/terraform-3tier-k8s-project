@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deployment
+  labels:
+    app: frontend
+    tier: web
+    project: project1
 spec:
   replicas: 1
   selector:
@@ -11,9 +15,36 @@ spec:
     metadata:
       labels:
         app: frontend
+        tier: web
+        project: project1
     spec:
       containers:
-      - name: frontend
-        image: ashishgurau/frontend:v7
-        ports:
-        - containerPort: 80
+        - name: frontend
+          image: ashishgurau/frontend:v10
+          ports:
+            - containerPort: 80
+
+          # Resource requests/limits to avoid overloading cluster
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+
+          # Liveness probe (UI must return 200 OK when reachable)
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          # Readiness probe to make sure React is fully served
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
