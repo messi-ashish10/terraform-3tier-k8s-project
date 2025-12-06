@@ -6,6 +6,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Health check route (for Kubernetes)
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URL || "mongodb://mongo-service:27017/tasksdb")
@@ -19,19 +24,19 @@ const TaskSchema = new mongoose.Schema({
 
 const Task = mongoose.model("Task", TaskSchema);
 
-// Routes
-app.get("/tasks", async (req, res) => {
+// API Routes (UPDATED with /api prefix)
+app.get("/api/tasks", async (req, res) => {
   const tasks = await Task.find();
   res.json(tasks);
 });
 
-app.post("/tasks", async (req, res) => {
+app.post("/api/tasks", async (req, res) => {
   const task = new Task({ title: req.body.title });
   await task.save();
   res.json(task);
 });
 
-app.delete("/tasks/:id", async (req, res) => {
+app.delete("/api/tasks/:id", async (req, res) => {
   await Task.findByIdAndDelete(req.params.id);
   res.json({ message: "Task deleted" });
 });
