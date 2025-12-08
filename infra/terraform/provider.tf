@@ -9,11 +9,11 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region = "us-east-1"
+  region  = var.aws_region
   profile = "default"
-  
+
   assume_role {
-     role_arn = "arn:aws:iam::495804826271:role/TerraformExecutionRole"
-     session_name = "terraform-session"
+    role_arn     = "arn:aws:iam::495804826271:role/TerraformExecutionRole"
+    session_name = "terraform-session"
   }
 }
