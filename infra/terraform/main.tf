@@ -26,3 +26,21 @@ module "vpc" {
 
   tags = local.common_tags
 }
+
+module "security"{
+  source = "./modules/security"
+  project = local.project
+  environment = local.environment
+  vpc_id = module.vpc.vpc_id
+
+  tags = local.common_tags
+
+  #ports
+  alb_http_port = 80
+  alb_https_port = 443
+  app_port = 8080
+  db_port = 27017
+
+  #ssh_allowed_cidrs = ["YOUR_IP/32"]
+  enable_bastion_sg = true
+}
