@@ -9,3 +9,8 @@ variable "environment" {
   type        = string
   default     = "dev"
 }
+
+variable "public_key_path"{
+    description = "Path to public SSH key"
+    type = string
+}

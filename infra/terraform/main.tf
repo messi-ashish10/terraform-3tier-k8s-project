@@ -27,20 +27,37 @@ module "vpc" {
   tags = local.common_tags
 }
 
-module "security"{
-  source = "./modules/security"
-  project = local.project
+module "security" {
+  source      = "./modules/security"
+  project     = local.project
   environment = local.environment
-  vpc_id = module.vpc.vpc_id
+  vpc_id      = module.vpc.vpc_id
 
   tags = local.common_tags
 
   #ports
-  alb_http_port = 80
+  alb_http_port  = 80
   alb_https_port = 443
-  app_port = 8080
-  db_port = 27017
+  app_port       = 8080
+  db_port        = 27017
 
   #ssh_allowed_cidrs = ["YOUR_IP/32"]
   enable_bastion_sg = true
+}
+
+module "bastion" {
+  source               = "./modules/ec2"
+  name                 = "bastion-host"
+  ami_id               = data.aws_ami.amazon_linux.id
+  instance_type        = "t3.micro"
+  subnet_id            = module.vpc.public_subnet_ids[0]
+  security_group_ids   = [module.security.bastion_sg_id]
+  key_name             = aws_key_pair.project_key.key_name
+  associate_public_ip  = true
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+
+  tags = {
+    Environment = "dev"
+    Role        = "bastion"
+  }
 }
