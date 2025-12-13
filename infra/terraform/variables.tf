@@ -10,7 +10,7 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "public_key_path"{
-    description = "Path to public SSH key"
-    type = string
+variable "public_key_path" {
+  description = "Path to public SSH key"
+  type        = string
 }
