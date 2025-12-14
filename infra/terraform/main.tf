@@ -21,7 +21,7 @@ module "vpc" {
   ]
 
   #Learning
-  enable_nat_gateway = false
+  enable_nat_gateway = true
   single_nat_gateway = true
 
   tags = local.common_tags
@@ -59,5 +59,23 @@ module "bastion" {
   tags = {
     Environment = "dev"
     Role        = "bastion"
+  }
+}
+
+module "app_ec2" {
+  source               = "./modules/ec2"
+  name                 = "app-server"
+  ami_id               = data.aws_ami.amazon_linux.id
+  instance_type        = "t3.micro"
+  subnet_id            = module.vpc.private_subnet_ids[0]
+  security_group_ids   = [module.security.app_sg_id]
+  associate_public_ip  = false
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+  key_name             = null
+  user_data_path       = "${path.module}/user_data/docker.sh"
+  tags = {
+    Name        = "app-server"
+    Environment = var.environment
+    Project     = "project-3tier"
   }
 }

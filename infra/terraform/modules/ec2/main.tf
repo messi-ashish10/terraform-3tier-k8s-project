@@ -7,6 +7,8 @@ resource "aws_instance" "this"{
     associate_public_ip_address = var.associate_public_ip
     iam_instance_profile = var.iam_instance_profile
 
+    user_data = var.user_data_path != null ? file(var.user_data_path) : null
+
     tags = merge(
         {
             Name = var.name

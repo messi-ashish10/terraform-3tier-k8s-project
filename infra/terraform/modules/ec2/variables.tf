@@ -47,3 +47,8 @@ variable "tags"{
     default = {}
 }
 
+variable "user_data_path"{
+    description = "Path to user_data script"
+    type = string
+    default = null
+}
