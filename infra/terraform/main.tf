@@ -79,3 +79,16 @@ module "app_ec2" {
     Project     = "project-3tier"
   }
 }
+
+#Calling Load Balancer
+module "alb" {
+  source            = "./modules/alb"
+  vpc_id            = module.vpc.vpc_id
+  public_subnet_ids = module.vpc.public_subnet_ids
+  app_port          = 3000
+
+  tags = {
+    Project = "project-3tier"
+    Env     = "dev"
+  }
+}
