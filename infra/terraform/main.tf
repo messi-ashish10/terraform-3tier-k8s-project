@@ -92,3 +92,10 @@ module "alb" {
     Env     = "dev"
   }
 }
+
+#Attach EC2 with ALB target group
+resource "aws_lb_target_group_attachment" "app" {
+  target_group_arn = module.alb.target_group_arn
+  target_id        = module.app_ec2.instance_id
+  port             = 8080
+}

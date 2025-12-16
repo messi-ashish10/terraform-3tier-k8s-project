@@ -16,7 +16,7 @@ variable "app_port"{
 variable "health_check_path"{
     description = "Health check path for the target group"
     type = string
-    default = "/"
+    default = "/health"
 }
 
 variable "tags"{
