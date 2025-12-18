@@ -54,3 +54,8 @@ variable "enable_bastion_sg" {
   type        = bool
   default     = true
 }
+
+variable "alb_security_group_id"{
+  description = "Security group ID attached to the ALB"
+  type = string
+}

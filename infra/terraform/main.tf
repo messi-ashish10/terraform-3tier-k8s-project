@@ -43,6 +43,8 @@ module "security" {
 
   #ssh_allowed_cidrs = ["YOUR_IP/32"]
   enable_bastion_sg = true
+
+  alb_security_group_id = module.alb.alb_security_group_id
 }
 
 module "bastion" {
@@ -73,6 +75,9 @@ module "app_ec2" {
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   key_name             = null
   user_data_path       = "${path.module}/user_data/docker.sh"
+
+  depends_on = [module.vpc]
+
   tags = {
     Name        = "app-server"
     Environment = var.environment
@@ -85,7 +90,7 @@ module "alb" {
   source            = "./modules/alb"
   vpc_id            = module.vpc.vpc_id
   public_subnet_ids = module.vpc.public_subnet_ids
-  app_port          = 3000
+  app_port          = 8080
 
   tags = {
     Project = "project-3tier"

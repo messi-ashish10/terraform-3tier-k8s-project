@@ -66,7 +66,7 @@ resource "aws_security_group" "app" {
     from_port       = var.app_port
     to_port         = var.app_port
     protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id]
+    security_groups = [var.alb_security_group_id]
   }
 
   #Optional: allow SSH from bastion SG

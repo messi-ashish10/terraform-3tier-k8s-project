@@ -1,21 +1,46 @@
 #!/bin/bash
 set -e
 
-yum update -y
+LOG=/var/log/user-data.log
+exec > >(tee -a $LOG) 2>&1
 
-amazon-linux-extras install docker -y
+echo "=== User data started ==="
 
+# Clean and refresh yum safely
+yum clean all
+yum makecache fast
+
+# Install Docker with retries (critical)
+for i in {1..10}; do
+  yum install -y docker && break
+  echo "Docker install failed, retrying in 15s..."
+  sleep 15
+done
+
+# Start Docker
+systemctl daemon-reload
 systemctl start docker
 systemctl enable docker
 
+# Allow ec2-user to use docker later
 usermod -aG docker ec2-user
 
-sleep 10
+# Wait for Docker daemon to be ready
+until docker info >/dev/null 2>&1; do
+  echo "Waiting for Docker to start..."
+  sleep 5
+done
 
-docker pull ashishgurau/backend:v6
+# Pull and run backend
+docker pull ashishgurau/backend:v7
+
+docker rm -f backend || true
 
 docker run -d \
-    --name backend \
-    -p 8080:5000 \
-    --restart always \
-    ashishgurau/backend:v6
+  --name backend \
+  -p 8080:5000 \
+  --restart always \
+  -e MONGO_URL="mongodb+srv://project1-cluster:9Uw0hZQOMsLT87x7@cluster0.h6xtnxo.mongodb.net/?appName=Cluster0" \
+  ashishgurau/backend:v8
+
+echo "=== User data finished successfully ==="

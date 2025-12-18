@@ -9,6 +9,8 @@ resource "aws_instance" "this"{
 
     user_data = var.user_data_path != null ? file(var.user_data_path) : null
 
+    user_data_replace_on_change = true
+
     tags = merge(
         {
             Name = var.name
