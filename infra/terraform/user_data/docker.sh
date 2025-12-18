@@ -40,7 +40,7 @@ docker run -d \
   --name backend \
   -p 8080:5000 \
   --restart always \
-  -e MONGO_URL="mongodb+srv://project1-cluster:9Uw0hZQOMsLT87x7@cluster0.h6xtnxo.mongodb.net/?appName=Cluster0" \
+  -e MONGO_URL="" \
   ashishgurau/backend:v8
 
 echo "=== User data finished successfully ==="
