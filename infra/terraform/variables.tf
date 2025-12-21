@@ -14,3 +14,9 @@ variable "public_key_path" {
   description = "Path to public SSH key"
   type        = string
 }
+
+variable "frontend_bucket_name" {
+  description = "Frontend S3 bucket name"
+  type        = string
+}
+

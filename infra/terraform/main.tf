@@ -104,3 +104,9 @@ resource "aws_lb_target_group_attachment" "app" {
   target_id        = module.app_ec2.instance_id
   port             = 8080
 }
+
+#frontend
+module "frontend" {
+  source      = "./modules/frontend"
+  bucket_name = var.frontend_bucket_name
+}
